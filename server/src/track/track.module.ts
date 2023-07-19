@@ -15,7 +15,8 @@ import {FileService} from "../file/file.service";
     providers: [
         TrackService,
         FileService
-    ]
+    ],
+
 })
 
 export class TrackModule {}
