@@ -44,14 +44,29 @@ const TrackItem = ({track, active = false}: TrackItemProps) => {
                     />
                 </div>
                 <div className={"flex justify-between"}>
-                    <Image
-                        src={"/play-button.png"}
-                        width={35}
-                        height={35}
-                        alt="Picture play"
-                        className={"cursor-pointer hover:scale-[1.2] duration-300"}
-                        onClick={e => playTrack(e)}
-                    />
+                    {active
+                        ? (
+                            <Image
+                                src={"/pause.png"}
+                                width={35}
+                                height={35}
+                                alt="Picture play"
+                                className={"cursor-pointer hover:scale-[1.2] duration-300"}
+                                onClick={e => playTrack(e)}
+                            />
+                        )
+                        : (
+                            <Image
+                                src={"/play-button.png"}
+                                width={35}
+                                height={35}
+                                alt="Picture play"
+                                className={"cursor-pointer hover:scale-[1.2] duration-300"}
+                                onClick={e => playTrack(e)}
+                            />
+                        )
+                    }
+
                     <Image
                         src={"/delete.svg"}
                         width={35}

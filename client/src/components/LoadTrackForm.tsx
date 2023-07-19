@@ -6,6 +6,7 @@ import styles from "@/styles/global.module.scss"
 import axios from "axios";
 import FileUpload from "@/components/FileUpload";
 import {ITrack} from "@/models/track";
+import FormData from "form-data";
 
 const LoadTrackForm = () => {
 
@@ -18,6 +19,10 @@ const LoadTrackForm = () => {
     const loadNewTrack = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
+        /*const formData = new FormData();
+
+        formData.append()*/
+
         const track: ITrack = {
             name,
             artist,
@@ -28,6 +33,12 @@ const LoadTrackForm = () => {
 
         await axios.post('../api/track/create', track);
         console.log("Successfully create!")
+    }
+
+    const check = (e: any) => {
+        e.preventDefault();
+        console.log(picture)
+        console.log(audio)
     }
 
     return (
@@ -50,7 +61,7 @@ const LoadTrackForm = () => {
             <FileUpload setFile={setPicture} accept={"image/*"}/>
             <FileUpload setFile={setAudio} accept={"audio/*"}/>
             <MyButton
-                onClick={() => console.log(picture)}
+                onClick={e => check(e)}
             >Check Result</MyButton>
             <MyButton
                 onClick={e => loadNewTrack(e)}
