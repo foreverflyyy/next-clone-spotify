@@ -17,7 +17,7 @@ const TrackList = () => {
         }
 
         getTracks()
-    }, [])
+    }, [tracks])
 
     return (
         <>

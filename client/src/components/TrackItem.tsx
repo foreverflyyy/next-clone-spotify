@@ -2,6 +2,7 @@ import React from 'react';
 import {ITrack} from "@/models/track";
 import {useRouter} from "next/navigation";
 import Image from 'next/image'
+import axios from "axios";
 
 interface TrackItemProps {
     track: ITrack;
@@ -17,8 +18,9 @@ const TrackItem = ({track, active = false}: TrackItemProps) => {
         console.log("play")
     }
 
-    const deleteTrack = (e: React.MouseEvent<HTMLImageElement>) => {
+    const deleteTrack = async (e: React.MouseEvent<HTMLImageElement>) => {
         e.stopPropagation();
+        await axios.post('api/track/delete', { id: track._id });
         console.log("delete")
     }
 

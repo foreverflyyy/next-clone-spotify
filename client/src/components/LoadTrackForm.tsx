@@ -4,39 +4,56 @@ import MyInput from "@/components/UI/MyInput";
 import MyButton from "@/components/UI/MyButton";
 import styles from "@/styles/global.module.scss"
 import axios from "axios";
+import FileUpload from "@/components/FileUpload";
+import {ITrack} from "@/models/track";
 
 const LoadTrackForm = () => {
 
-    const [nameTrack, setNameTrack] = useState("");
-    const [artistTrack, setArtistTrack] = useState("");
+    const [name, setName] = useState("");
+    const [artist, setArtist] = useState("");
 
-    const loadNewTrack = async () => {
-        await axios.post(`${process.env.SERVER_PATH}/track`, {
-            params: {
+    const [picture, setPicture] = useState(null);
+    const [audio, setAudio] = useState(null);
 
-            }
-        })
+    const loadNewTrack = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+
+        const track: ITrack = {
+            name,
+            artist,
+            text: "",
+            picture,
+            audio
+        }
+
+        await axios.post('../api/track/create', track);
+        console.log("Successfully create!")
     }
 
     return (
         <form
             className={styles.form}
-            onSubmit={loadNewTrack}
+            //onSubmit={loadNewTrack}
         >
             <MyInput
                 type="text"
                 placeholder={"Enter name track"}
-                value={nameTrack}
-                onChange={e => setNameTrack(e.target.value)}
+                value={name}
+                onChange={e => setName(e.target.value)}
             />
             <MyInput
                 type="text"
                 placeholder={"Enter name artist"}
-                value={artistTrack}
-                onChange={e => setArtistTrack(e.target.value)}
+                value={artist}
+                onChange={e => setArtist(e.target.value)}
             />
+            <FileUpload setFile={setPicture} accept={"image/*"}/>
+            <FileUpload setFile={setAudio} accept={"audio/*"}/>
             <MyButton
-
+                onClick={() => console.log(picture)}
+            >Check Result</MyButton>
+            <MyButton
+                onClick={e => loadNewTrack(e)}
             >
                 Create new track
             </MyButton>
