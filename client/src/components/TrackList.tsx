@@ -23,7 +23,7 @@ const TrackList = () => {
         <>
             <div>
             </div>
-            <div className={"py-3"}>
+            <div className={"py-3 flex"}>
                 {tracks?.map(track =>
                     <TrackItem key={track._id} track={track}/>
                 )}

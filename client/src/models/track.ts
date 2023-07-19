@@ -5,6 +5,7 @@ export interface ITrack {
     name: string,
     artist: string,
     text: string,
+    listeners: number,
     picture?: string,
     audio?: string,
     comments?: IComment[]

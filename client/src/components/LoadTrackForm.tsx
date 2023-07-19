@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import MyInput from "@/components/UI/MyInput";
 import MyButton from "@/components/UI/MyButton";
+import styles from "@/styles/global.module.scss"
 import axios from "axios";
 
 const LoadTrackForm = () => {
@@ -19,7 +20,7 @@ const LoadTrackForm = () => {
 
     return (
         <form
-            className={"py-10 flex flex-col"}
+            className={styles.form}
             onSubmit={loadNewTrack}
         >
             <MyInput
