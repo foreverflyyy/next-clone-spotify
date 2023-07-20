@@ -5,64 +5,56 @@ import MyButton from "@/components/UI/MyButton";
 import styles from "@/styles/global.module.scss"
 import axios from "axios";
 import FileUpload from "@/components/FileUpload";
-import {ITrack} from "@/models/track";
-import FormData from "form-data";
+import {useInput} from "@/hooks/useInput";
+import {useRouter} from "next/navigation";
 
 const LoadTrackForm = () => {
 
-    const [name, setName] = useState("");
-    const [artist, setArtist] = useState("");
+    const router = useRouter();
 
-    const [picture, setPicture] = useState(null);
-    const [audio, setAudio] = useState(null);
+    const name = useInput("");
+    const artist = useInput("");
+    const text = useInput("");
+
+    const [picture, setPicture] = useState<any>(null);
+    const [audio, setAudio] = useState<any>(null);
 
     const loadNewTrack = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        /*const formData = new FormData();
+        const formData = new FormData();
+        formData.append("name", name.value);
+        formData.append("artist", artist.value);
+        formData.append("text", text.value);
+        formData.append("picture", picture);
+        formData.append("audio", audio);
 
-        formData.append()*/
-
-        const track: ITrack = {
-            name,
-            artist,
-            text: "",
-            picture,
-            audio
-        }
-
-        await axios.post('../api/track/create', track);
-        console.log("Successfully create!")
-    }
-
-    const check = (e: any) => {
-        e.preventDefault();
-        console.log(picture)
-        console.log(audio)
+        await axios.post('http://localhost:5000/track', formData)
+            .then(() => router.push('/track'))
+            .catch(e => console.log(e));
     }
 
     return (
         <form
             className={styles.form}
-            //onSubmit={loadNewTrack}
         >
             <MyInput
                 type="text"
                 placeholder={"Enter name track"}
-                value={name}
-                onChange={e => setName(e.target.value)}
+                {...name}
             />
             <MyInput
                 type="text"
                 placeholder={"Enter name artist"}
-                value={artist}
-                onChange={e => setArtist(e.target.value)}
+                {...artist}
+            />
+            <MyInput
+                type="text"
+                placeholder={"Enter name text of track"}
+                {...text}
             />
             <FileUpload setFile={setPicture} accept={"image/*"}/>
             <FileUpload setFile={setAudio} accept={"audio/*"}/>
-            <MyButton
-                onClick={e => check(e)}
-            >Check Result</MyButton>
             <MyButton
                 onClick={e => loadNewTrack(e)}
             >
