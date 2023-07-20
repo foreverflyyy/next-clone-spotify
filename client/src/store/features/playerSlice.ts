@@ -4,7 +4,7 @@ import {ITrack} from "@/models/track";
 
 const initialState: IPlayerState = {
     active: null,
-    volume: 0,
+    volume: 50,
     currentTime: 0,
     duration: 0,
     pause: true

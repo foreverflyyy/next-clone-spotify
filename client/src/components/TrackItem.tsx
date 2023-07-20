@@ -3,19 +3,37 @@ import {ITrack} from "@/models/track";
 import {useRouter} from "next/navigation";
 import Image from 'next/image'
 import axios from "axios";
+import {useAppDispatch, useAppSelector} from "@/store/hooks";
+import {setActive, setPause} from "@/store/features/playerSlice";
 
 interface TrackItemProps {
     track: ITrack;
-    active?: boolean;
 }
 
-const TrackItem = ({track, active = false}: TrackItemProps) => {
+const TrackItem = ({track}: TrackItemProps) => {
 
     const router = useRouter();
 
+    const {
+        active,
+        pause
+    } = useAppSelector(state => state.player);
+
+    const dispatch = useAppDispatch();
+
     const playTrack = (e: React.MouseEvent<HTMLImageElement>) => {
+
+        if(active?._id === track?._id && pause){
+            dispatch(setPause(false));
+        }
+
         e.stopPropagation();
-        console.log("play")
+        dispatch(setActive(track));
+    }
+
+    const stopTrack = (e: React.MouseEvent<HTMLImageElement>) => {
+        e.stopPropagation();
+        dispatch(setPause(true));
     }
 
     const deleteTrack = async (e: React.MouseEvent<HTMLImageElement>) => {
@@ -44,15 +62,15 @@ const TrackItem = ({track, active = false}: TrackItemProps) => {
                     />
                 </div>
                 <div className={"flex justify-between"}>
-                    {active
+                    {active && active._id === track._id && !pause
                         ? (
                             <Image
                                 src={"/pause.png"}
                                 width={35}
                                 height={35}
-                                alt="Picture play"
+                                alt="Pause"
                                 className={"cursor-pointer hover:scale-[1.2] duration-300"}
-                                onClick={e => playTrack(e)}
+                                onClick={stopTrack}
                             />
                         )
                         : (
@@ -60,9 +78,9 @@ const TrackItem = ({track, active = false}: TrackItemProps) => {
                                 src={"/play-button.png"}
                                 width={35}
                                 height={35}
-                                alt="Picture play"
+                                alt="Play"
                                 className={"cursor-pointer hover:scale-[1.2] duration-300"}
-                                onClick={e => playTrack(e)}
+                                onClick={playTrack}
                             />
                         )
                     }

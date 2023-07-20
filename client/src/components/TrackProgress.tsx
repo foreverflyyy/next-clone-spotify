@@ -11,10 +11,10 @@ const TrackProgress = ({left, right, onChange}: TrackProgressProps) => {
         <div className={"flex"}>
             <input
                 type="range"
-                min={left}
+                min={0}
                 max={right}
                 value={left}
-                onChange={e => onChange(e)}
+                onChange={onChange}
             />
             <h2>{left}/{right}</h2>
         </div>
