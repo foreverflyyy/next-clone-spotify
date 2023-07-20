@@ -4,10 +4,20 @@ import React, {useState} from 'react';
 import Image from "next/image";
 import {ITrack} from "@/models/track";
 import TrackProgress from "@/components/TrackProgress";
+import {useAppDispatch, useAppSelector} from "@/store/hooks";
+import {setPause} from "@/store/features/playerSlice";
 
 const Player = () => {
 
-    const [active, setActive] = useState(false);
+    const {
+        active,
+        volume,
+        pause,
+        duration,
+        currentTime
+    } = useAppSelector(state => state.player);
+
+    const dispatch = useAppDispatch();
 
     const track: ITrack = {
         "_id": "64b6cea987a5ec39938ff6f8",
@@ -18,31 +28,27 @@ const Player = () => {
         "comments": []
     }
 
-    const changeActive = () => {
-        setActive(!active);
-    }
-
     return (
         <div className={"fixed bottom-0 h-[60px] w-full flex items-center justify-between bg-gray-200 px-10 py-4"}>
-            {active
+            {pause
                 ? (
-                    <Image
-                        src={"/pause.png"}
-                        width={35}
-                        height={35}
-                        alt="Pause"
-                        className={"cursor-pointer hover:scale-[1.2] duration-300"}
-                        onClick={changeActive}
-                    />
-                )
-                : (
                     <Image
                         src={"/play-button.png"}
                         width={35}
                         height={35}
                         alt="Play"
                         className={"cursor-pointer hover:scale-[1.2] duration-300"}
-                        onClick={changeActive}
+                        onClick={() => dispatch(setPause(false))}
+                    />
+                )
+                : (
+                    <Image
+                        src={"/pause.png"}
+                        width={35}
+                        height={35}
+                        alt="Pause"
+                        className={"cursor-pointer hover:scale-[1.2] duration-300"}
+                        onClick={() => dispatch(setPause(true))}
                     />
                 )
             }
@@ -62,7 +68,7 @@ const Player = () => {
                     height={35}
                     alt="volume"
                     className={"cursor-pointer hover:scale-[1.2] duration-300"}
-                    onClick={changeActive}
+                    onClick={() => console.log("volume")}
                 />
                 <TrackProgress
                     right={100}

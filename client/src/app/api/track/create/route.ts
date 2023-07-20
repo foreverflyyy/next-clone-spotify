@@ -3,8 +3,6 @@ import {ITrack} from "@/models/track";
 
 export async function POST(req: Request, res: Response) {
     try {
-        console.log("HELLLLOOOOOO!")
-
         const track = await req.json();
 
         const newTrack: ITrack = {

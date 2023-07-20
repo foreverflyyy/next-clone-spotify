@@ -1,23 +1,11 @@
 "use client"
 
-import React, {useEffect, useMemo, useState} from 'react';
-import {ITrack} from "@/models/track";
-import axios from "axios";
 import TrackItem from "@/components/TrackItem";
+import {useGetTracksQuery} from "@/store/services/tracksApi";
 
 const TrackList = () => {
 
-    const [tracks, setTracks] = useState<ITrack[]>([]);
-
-    useEffect(() => {
-        const getTracks = async () => {
-            const response = await axios.get('api/track');
-            const tracks = response.data as ITrack[];
-            setTracks(tracks);
-        }
-
-        getTracks()
-    }, [tracks])
+    const {isLoading, error, data: tracks} = useGetTracksQuery(null);
 
     return (
         <>

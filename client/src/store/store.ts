@@ -1,16 +1,22 @@
 import {combineReducers} from "redux";
 import {configureStore} from "@reduxjs/toolkit";
-import {createWrapper} from "next-redux-wrapper";
+import {playerReducer} from "@/store/features/playerSlice";
+import {tracksApi} from "@/store/services/tracksApi";
+import {setupListeners} from "@reduxjs/toolkit/query";
 
 
 const rootReducers = combineReducers({
-
+    player: playerReducer,
+    [tracksApi.reducerPath]: tracksApi.reducer
 })
 
-const store = configureStore({
-    reducer: rootReducers
+export const store = configureStore({
+    reducer: rootReducers,
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({}).concat([tracksApi.middleware])
 })
 
-//export const wrapper = createWrapper(configureStore);
+setupListeners(store.dispatch);
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
