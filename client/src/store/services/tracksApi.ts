@@ -7,9 +7,11 @@ export const tracksApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:5000/"
     }),
+    tagTypes: ["Tracks"],
     endpoints: (builder) => ({
-        getTracks: builder.query<ITrack[], null>({
-            query: () => "track",
+        getTracks: builder.query<ITrack[], {query: string}>({
+            query: ({query}) => "track/search?query=" + query,
+            providesTags: ['Tracks']
         }),
         getTrackById: builder.query<ITrack, {id: string}>({
             query: ({id}) => `track/${id}`,
@@ -19,5 +21,5 @@ export const tracksApi = createApi({
 
 export const {
     useGetTracksQuery,
-    useGetTrackByIdQuery,
+    useGetTrackByIdQuery
 } = tracksApi;

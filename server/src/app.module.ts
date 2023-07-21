@@ -7,7 +7,7 @@ import * as path from "path";
 
 @Module({
   imports: [
-      ServeStaticModule.forRoot({rootPath: path.resolve(__dirname, 'static')}),
+      ServeStaticModule.forRoot({rootPath: path.resolve(__dirname, 'staticFiles')}),
       MongooseModule.forRoot('mongodb+srv://nikita:nik16112002@music-platform.pw2kxif.mongodb.net/'),
       TrackModule,
       FileModule

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import axios from "axios";
 import {useAppDispatch, useAppSelector} from "@/store/hooks";
 import {setActive, setPause} from "@/store/features/playerSlice";
+import {useGetTracksQuery} from "@/store/services/tracksApi";
 
 interface TrackItemProps {
     track: ITrack;
@@ -18,6 +19,8 @@ const TrackItem = ({track}: TrackItemProps) => {
         active,
         pause
     } = useAppSelector(state => state.player);
+
+    const {refetch} = useGetTracksQuery(null);
 
     const dispatch = useAppDispatch();
 
@@ -38,8 +41,8 @@ const TrackItem = ({track}: TrackItemProps) => {
 
     const deleteTrack = async (e: React.MouseEvent<HTMLImageElement>) => {
         e.stopPropagation();
-        await axios.post('api/track/delete', { id: track._id });
-        console.log("delete")
+        await axios.delete(`http://localhost:5000/track/${track._id}`);
+        refetch();
     }
 
     return (

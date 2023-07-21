@@ -1,6 +1,19 @@
 import React from 'react';
 import {ITrack} from "@/models/track";
 import axios from "axios";
+import Head from "next/head";
+import {Metadata} from "next";
+
+export async function generateMetadata(
+    {params: {id}}: { params: { id: string }}
+): Promise<Metadata>{
+
+    const track: ITrack = await getTrackById(id);
+
+    return {
+        title: `Track: ${track.name}, artist: ${track.artist}`,
+    }
+}
 
 async function getTrackById(id: string) {
     const response = await axios.get(`http://localhost:5000/track/${id}`);
@@ -30,7 +43,6 @@ const Page = async ({params: {id}}: { params: { id: string }}) => {
                 </div>
             </div>
         </div>
-
     );
 };
 

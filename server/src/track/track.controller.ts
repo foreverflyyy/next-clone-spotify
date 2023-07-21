@@ -15,14 +15,14 @@ export class TrackController{
         return this.trackService.getAll(limit, offset);
     }
 
+    @Get('/search')
+    search(@Query('query') query: string) {
+        return this.trackService.search(query)
+    }
+
     @Get(':id')
     getOne(@Param('id') id: ObjectId) {
         return this.trackService.getOne(id);
-    }
-
-    @Get('/search')
-    search(@Query('query') query: string) {
-        return this.trackService.search(query);
     }
 
     @Post()
