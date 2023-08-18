@@ -7,6 +7,9 @@
 <img align="left" alt="Tailwind" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" />
 <img align="left" alt="Mongodb" width="30px" style="padding-right:10px;" src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" />
 
+<br/>
+<br/>
+
 # next-nest-clone-spotify
 
 - Сделать приложения - аналог Spotify, где можно загружать, хранить и включать треки
